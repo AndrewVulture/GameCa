@@ -14,7 +14,7 @@
     ></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>GameCa</title>
   </head>
   <body>
     <div class="container text-center">
@@ -22,10 +22,16 @@
         <div class="col col-2"></div>
         <div class="col">
           <div class="card welcomeCard">
-            <div class="card-body">    Welcome to your first day as a Higley High School security guard!
-              It will be your dutyto keep those lowsy lowlifes from leaving the school grounds before they are allowed to.
-              To do this you will be checking the ID of every stutent trying to leave through the gates</div>
+            <div class="card-body welcomeText">
+              Welcome to your first day as a Higley High School security guard!
+              It will be your dutyto keep those lowsy lowlifes from leaving the
+              school grounds before they are allowed to. To do this you will be
+              checking the ID of every stutent trying to leave through the gates
+            </div>
           </div>
+          <button type="button" class="btn btn-success startButton">
+            Start
+          </button>
         </div>
         <div class="col col-2"></div>
       </div>
@@ -34,7 +40,27 @@
 </html>
 
 <style>
+  body {
+    background-image: url("https://media.istockphoto.com/id/1205933896/vector/texture-of-old-oak-or-pine-tree-slice.jpg?s=612x612&w=0&k=20&c=-BDRZ_ylqMSEAJKUIm41wfbWlY0CQsFs6LC2jWwBZIU=");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   .welcomeCard {
     margin-top: 5rem;
+    background-image: url("https://media.istockphoto.com/id/121305526/photo/blank-piece-of-lined-paper-with-red-margins.jpg?s=612x612&w=0&k=20&c=4IIAZCKQa6VciDhuDx45tYtlkqJL3mwzjZ3BTw0kFJE=");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+  }
+  .welcomeText {
+    margin-top: 3rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    font-size: 1.5rem;
+  }
+  .startButton {
+    font-size: 2rem;
+    margin-top: 1rem;
+    width: 100%;
   }
 </style>

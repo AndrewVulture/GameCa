@@ -16,6 +16,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="./userInfo.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
@@ -27,16 +28,16 @@
         <div class="col mainCol col-1"></div>
         <div class="col mainCol">
           <div class="card" id="idCard">
-            <div class="card-body">
+            <div class="card-body" id="idCardBody">
               <div class="container text-center" id="idCont">
                 <div class="row align-items-start" id="idRow">
-                  <div class="col col-4" id="photoSpot"></div>
+                  <div class="col col-4" id="photoCol"><div id="photoSpot"></div></div>
                   <div class="col col-8">
                     <p id="schoolName">HIGLEY HIGH SCHOOL</p>
                     <p></p>
                     <hr class="border border-primary border-1 opacity-75" />
                     <p id="year">2023-2024</p>
-                    <p id="name">ANDREW MAY</p>
+                    <p id="name"></p>
                     <div id="logoSpot"></div>
                     <p id="grade">GRADE 12</p>
                     <p id="releaseHr">RELEASE HR: 5</p>
@@ -62,21 +63,23 @@
         </div>
         <div class="col mainCol col-2">
           <div class="card" id="timeCard">
-            <div class="card-body" id="time">Period <span><i class="bi bi-1-square-fill"></i></span></div>
+            <div class="card-body" id="time">
+              Period <span><i class="bi bi-1-square-fill"></i></span>
+            </div>
           </div>
           <div class="card" id="dayCard">
             <div class="card-body" id="day">
-                Day <i class="bi bi-0-square-fill"></i>
+              Day <i class="bi bi-0-square-fill"></i>
             </div>
           </div>
           <div class="card" id="correctCard">
             <div class="card-body" id="correct">
-                Correct <i class="bi bi-0-square-fill text-success"></i>
+              Correct <i class="bi bi-0-square-fill text-success"></i>
             </div>
           </div>
           <div class="card" id="errorsCard">
             <div class="card-body" id="errors">
-                Errors <i class="bi bi-0-square-fill text-danger"></i>
+              Errors <i class="bi bi-0-square-fill text-danger"></i>
             </div>
           </div>
         </div>
@@ -86,11 +89,13 @@
 </html>
 
 <script>
+  var numb = Math.floor(Math.random() * people.length);
   var img = document.createElement("img");
   img.id = "photo";
-  img.src = "./coolAndyMay.jpg";
+  img.src = people[numb].img;
   var src = document.getElementById("photoSpot");
   src.appendChild(img);
+  document.querySelector("#name").innerHTML = people[numb].name;
 
   var img2 = document.createElement("img");
   img2.id = "logo";
@@ -108,7 +113,6 @@
   #idCard {
     margin-top: 5svh;
     height: 60svh;
-    z-index: 10;
   }
   .mainCol {
     height: 100svh;
@@ -135,20 +139,23 @@
   }
   #photo {
     height: 100%;
-    margin-left: 50%;
-    transform: translateX(-50%);
   }
   #idCont {
     margin-top: 2%;
-    height: 94%;
+    height: 85%;
+    position: absolute;
   }
   #idRow {
     height: 100%;
   }
+  #photoCol {
+    height: 100%;
+  }
   #photoSpot {
     height: 100%;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
-    table-layout: fixed;
   }
   #schoolName {
     font-size: 2rem;
@@ -222,5 +229,8 @@
   }
   #day {
     font-weight: 600;
+  }
+  #idCardBody {
+    max-height: 100%;
   }
 </style>

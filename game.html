@@ -22,7 +22,7 @@
   </head>
 
   <body>
-    <div class="container text-center">
+    <div class="container text-center" id="mainCont">
       <div class="row align-items-start">
         <div class="col mainCol col-1"></div>
         <div class="col mainCol">
@@ -60,7 +60,26 @@
             </div>
           </div>
         </div>
-        <div class="col mainCol col-1"></div>
+        <div class="col mainCol col-2">
+          <div class="card" id="timeCard">
+            <div class="card-body" id="time">Period <span><i class="bi bi-1-square-fill"></i></span></div>
+          </div>
+          <div class="card" id="dayCard">
+            <div class="card-body" id="day">
+                Day <i class="bi bi-0-square-fill"></i>
+            </div>
+          </div>
+          <div class="card" id="correctCard">
+            <div class="card-body" id="correct">
+                Correct <i class="bi bi-0-square-fill text-success"></i>
+            </div>
+          </div>
+          <div class="card" id="errorsCard">
+            <div class="card-body" id="errors">
+                Errors <i class="bi bi-0-square-fill text-danger"></i>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
@@ -174,5 +193,34 @@
   }
   p {
     margin: 0px;
+  }
+  #mainCont {
+    margin: 0px;
+    max-width: 100svw;
+    width: 100svw;
+  }
+  #timeCard {
+    margin-top: 5svh;
+  }
+  #time {
+    font-weight: 600;
+  }
+  #errorsCard {
+    margin-top: 2svh;
+  }
+  #errors {
+    font-weight: 600;
+  }
+  #correctCard {
+    margin-top: 2svh;
+  }
+  #correct {
+    font-weight: 600;
+  }
+  #dayCard {
+    margin-top: 2svh;
+  }
+  #day {
+    font-weight: 600;
   }
 </style>

@@ -76,12 +76,13 @@
         <div class="col mainCol col-2">
           <div class="card" id="timeCard">
             <div class="card-body" id="time">
-              Period <span class="badge text-bg-secondary">1</span>
+              Period
+              <span id="periodValue" class="badge text-bg-secondary">1</span>
             </div>
           </div>
           <div class="card" id="dayCard">
             <div class="card-body" id="day">
-              Day <span class="badge text-bg-secondary">1</span>
+              Day <span id="dayValue" class="badge text-bg-secondary">1</span>
             </div>
           </div>
           <div class="card" id="correctCard">
@@ -103,11 +104,28 @@
 </html>
 
 <script>
+  //setting basic variables
+  window.p = 1;
+  window.d = 1;
+  window.correct = 0;
+  window.incorrect = 0;
+  window.completed = 0;
+
+  //randomizes the student id
   resetCard();
   function resetCard() {
-    //set current students release time
-    var hour = Math.floor(Math.random() * 6) + 1;
-    document.querySelector("#release").innerHTML = hour;
+    //creates 50/50 chance for the card to be incorrect or correct
+    var cardCorrect = Math.random() < 0.5;
+    if (cardCorrect) {
+      document.querySelector("#release").innerHTML = p;
+    } else {
+      //set current students release time
+      var hour = Math.floor(Math.random() * 6) + 1;
+      while (hour == p) {
+        hour = Math.floor(Math.random() * 6) + 1;
+      }
+      document.querySelector("#release").innerHTML = hour;
+    }
 
     //set current student
     var numb = Math.floor(Math.random() * people.length);
@@ -127,16 +145,17 @@
   var src2 = document.getElementById("logoSpot");
   src2.appendChild(img2);
 
-  //setting basic variables
-  window.p = 1;
-  window.d = 1;
-  window.correct = 0;
-  window.incorrect = 0;
-  window.completed = 0;
-
   function updatePoints() {
     document.querySelector("#correctValue").innerHTML = correct;
     document.querySelector("#incorrectValue").innerHTML = incorrect;
+  }
+
+  function checkLevelCompletion() {
+    if (completed == 18) {
+      alert("You have beaten level 1");
+    }
+    p = Math.floor(completed / 3) + 1;
+    document.querySelector("#periodValue").innerHTML = p;
   }
 
   //check if response was right or not
@@ -158,6 +177,7 @@
     }
     completed++;
 
+    checkLevelCompletion();
     updatePoints();
     resetCard();
   }

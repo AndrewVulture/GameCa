@@ -31,7 +31,9 @@
             <div class="card-body" id="idCardBody">
               <div class="container text-center" id="idCont">
                 <div class="row align-items-start" id="idRow">
-                  <div class="col col-4" id="photoCol"><div id="photoSpot"></div></div>
+                  <div class="col col-4" id="photoCol">
+                    <div id="photoSpot"></div>
+                  </div>
                   <div class="col col-8">
                     <p id="schoolName">HIGLEY HIGH SCHOOL</p>
                     <p></p>
@@ -40,7 +42,9 @@
                     <p id="name"></p>
                     <div id="logoSpot"></div>
                     <p id="grade">GRADE 12</p>
-                    <p id="releaseHr">RELEASE HR: 5</p>
+                    <p id="releaseHr">
+                      RELEASE HR: <span id="release">5</span>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -49,12 +53,20 @@
           <div class="container text-center btnCont">
             <div class="row align-items-start btnRow">
               <div class="col btnCol">
-                <button type="button" class="btn btn-danger checkBtn">
+                <button
+                  type="button"
+                  class="btn btn-danger checkBtn"
+                  onclick="checkCard(false)"
+                >
                   <i class="bi bi-x-square" id="cross"></i>
                 </button>
               </div>
               <div class="col btnCol">
-                <button type="button" class="btn btn-success checkBtn">
+                <button
+                  type="button"
+                  class="btn btn-success checkBtn"
+                  onclick="checkCard(true)"
+                >
                   <i class="bi bi-check-square" id="check"></i>
                 </button>
               </div>
@@ -69,7 +81,7 @@
           </div>
           <div class="card" id="dayCard">
             <div class="card-body" id="day">
-              Day <i class="bi bi-0-square-fill"></i>
+              Day <i class="bi bi-1-square-fill"></i>
             </div>
           </div>
           <div class="card" id="correctCard">
@@ -89,6 +101,11 @@
 </html>
 
 <script>
+  //set current students release time
+  var hour = Math.floor(Math.random() * 6) + 1;
+  document.querySelector("#release").innerHTML = hour;
+
+  //set current student
   var numb = Math.floor(Math.random() * people.length);
   var img = document.createElement("img");
   img.id = "photo";
@@ -97,11 +114,37 @@
   src.appendChild(img);
   document.querySelector("#name").innerHTML = people[numb].name;
 
+  //set higley logo
   var img2 = document.createElement("img");
   img2.id = "logo";
   img2.src = "./higleyLogo.png";
   var src2 = document.getElementById("logoSpot");
   src2.appendChild(img2);
+
+  //setting basic variables
+  window.p = 1;
+  window.d = 1;
+  window.correct = 0;
+  window.incorrect = 0;
+
+  //check if response was right or not
+  function checkCard(response) {
+    var studentHr = document.querySelector("#release").innerHTML;
+    
+    if (response) {
+      if (studentHr == p) {
+        correct++;
+      } else {
+        incorrect++;
+      }
+    } else {
+        if (studentHr != p) {
+        correct++;
+      } else {
+        incorrect++;
+      }
+    }
+  }
 </script>
 
 <style>
@@ -168,6 +211,7 @@
     font-weight: 600;
     letter-spacing: -2px;
     -webkit-transform: scale(1, 1.2);
+    transform: scale();
     color: #263191;
   }
   #name {

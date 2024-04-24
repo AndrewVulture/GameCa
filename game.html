@@ -76,22 +76,24 @@
         <div class="col mainCol col-2">
           <div class="card" id="timeCard">
             <div class="card-body" id="time">
-              Period <span><i class="bi bi-1-square-fill"></i></span>
+              Period <span class="badge text-bg-secondary">1</span>
             </div>
           </div>
           <div class="card" id="dayCard">
             <div class="card-body" id="day">
-              Day <i class="bi bi-1-square-fill"></i>
+              Day <span class="badge text-bg-secondary">1</span>
             </div>
           </div>
           <div class="card" id="correctCard">
             <div class="card-body" id="correct">
-              Correct <i class="bi bi-0-square-fill text-success"></i>
+              Correct
+              <span id="correctValue" class="badge text-bg-success">0</span>
             </div>
           </div>
           <div class="card" id="errorsCard">
             <div class="card-body" id="errors">
-              Errors <i class="bi bi-0-square-fill text-danger"></i>
+              Errors
+              <span id="incorrectValue" class="badge text-bg-danger">0</span>
             </div>
           </div>
         </div>
@@ -101,18 +103,22 @@
 </html>
 
 <script>
-  //set current students release time
-  var hour = Math.floor(Math.random() * 6) + 1;
-  document.querySelector("#release").innerHTML = hour;
+  resetCard();
+  function resetCard() {
+    //set current students release time
+    var hour = Math.floor(Math.random() * 6) + 1;
+    document.querySelector("#release").innerHTML = hour;
 
-  //set current student
-  var numb = Math.floor(Math.random() * people.length);
-  var img = document.createElement("img");
-  img.id = "photo";
-  img.src = people[numb].img;
-  var src = document.getElementById("photoSpot");
-  src.appendChild(img);
-  document.querySelector("#name").innerHTML = people[numb].name;
+    //set current student
+    var numb = Math.floor(Math.random() * people.length);
+    var img = document.createElement("img");
+    img.id = "photo";
+    img.src = people[numb].img;
+    var src = document.getElementById("photoSpot");
+    src.innerHTML = "";
+    src.appendChild(img);
+    document.querySelector("#name").innerHTML = people[numb].name;
+  }
 
   //set higley logo
   var img2 = document.createElement("img");
@@ -126,11 +132,17 @@
   window.d = 1;
   window.correct = 0;
   window.incorrect = 0;
+  window.completed = 0;
+
+  function updatePoints() {
+    document.querySelector("#correctValue").innerHTML = correct;
+    document.querySelector("#incorrectValue").innerHTML = incorrect;
+  }
 
   //check if response was right or not
   function checkCard(response) {
     var studentHr = document.querySelector("#release").innerHTML;
-    
+
     if (response) {
       if (studentHr == p) {
         correct++;
@@ -138,12 +150,16 @@
         incorrect++;
       }
     } else {
-        if (studentHr != p) {
+      if (studentHr != p) {
         correct++;
       } else {
         incorrect++;
       }
     }
+    completed++;
+
+    updatePoints();
+    resetCard();
   }
 </script>
 

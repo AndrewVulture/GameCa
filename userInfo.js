@@ -27,5 +27,20 @@ const people = [{
     name: 'Blane Allen',
     grade: 12,
     img: './photos/blane.jpg'
+},
+{
+    name: 'Anderson Sims',
+    grade: 12,
+    img: './photos/anderson.jpg'
+},
+{
+    name: 'Luke Johnson',
+    grade: 12,
+    img: './photos/luke.jpg'
+},
+{
+    name: 'Andy Toth',
+    grade: 12,
+    img: './photos/toth.jpg'
 }
 ]

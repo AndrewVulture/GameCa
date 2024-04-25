@@ -19,10 +19,70 @@
     <script src="./userInfo.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>GameCa: Level 1</title>
   </head>
 
   <body>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="nextModal"
+      tabindex="-1"
+      aria-labelledby="nextModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="nextModalLabel"></h1>
+          </div>
+          <div class="container text-center">
+            <div class="row align-items-start">
+              <div class="col">
+                <br />
+                <h1>
+                  <span class="badge text-bg-secondary">Congradulations</span>
+                </h1>
+                <p class="modalContent">
+                  You have beaten level 1 with a score of:
+                </p>
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Example with label"
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <div
+                    id="scoreBar"
+                    class="progress-bar"
+                    style="width: 1%"
+                  ></div>
+                </div>
+                <p class="modalContent">
+                  You can you either continue or try the level again
+                </p>
+                <br />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Try Again
+            </button>
+            <button type="button" class="btn btn-primary">
+              Continue<i class="bi bi-caret-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container text-center" id="mainCont">
       <div class="row align-items-start">
         <div class="col mainCol col-1"></div>
@@ -104,12 +164,32 @@
 </html>
 
 <script>
+  const nextLevelModal = new bootstrap.Modal(
+    document.querySelector("#nextModal"),
+    {}
+  );
   //setting basic variables
   window.p = 1;
   window.d = 1;
   window.correct = 0;
   window.incorrect = 0;
   window.completed = 0;
+
+  function beatLevel() {
+    nextLevelModal.show();
+    window.score = Math.round(correct / 18) * 100;
+    window.scoreLooop = window.setInterval(addScore, 100);
+  }
+
+  function addScore() {
+    let currentAmount = document.querySelector("#scoreBar").style.width;
+    let newAmount = Number(currentAmount.slice(0, -1)) + 1;
+    document.querySelector("#scoreBar").style.width = newAmount + "%";
+    console.log(newAmount, score)
+    if (newAmount >= score) {
+      clearInterval(scoreLooop);
+    }
+  }
 
   //randomizes the student id
   resetCard();
@@ -152,7 +232,7 @@
 
   function checkLevelCompletion() {
     if (completed == 18) {
-      alert("You have beaten level 1");
+        beatLevel();
     }
     p = Math.floor(completed / 3) + 1;
     document.querySelector("#periodValue").innerHTML = p;
@@ -312,5 +392,8 @@
   }
   #idCardBody {
     max-height: 100%;
+  }
+  .modalContent {
+    font-size: 2rem;
   }
 </style>

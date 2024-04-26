@@ -164,45 +164,64 @@
     //randomizes the student id
     resetCard();
     function resetCard() {
-    var img2 = document.createElement("img");
-    img2.id = "logo";
-    img2.src = "./higleyLogo.png";
-    var src2 = document.getElementById("logoSpot");
-    src2.innerHTML = ""
-    src2.appendChild(img2);
+        var img2 = document.createElement("img");
+        img2.id = "logo";
+        img2.src = "./higleyLogo.png";
+        var src2 = document.getElementById("logoSpot");
+        src2.innerHTML = ""
+        src2.appendChild(img2);
         //creates 50/50 chance for the card to be incorrect or correct
         var cardCorrect = Math.random() < 0.5;
         if (cardCorrect) { //if the card is correct
             document.querySelector("#release").innerHTML = p;
         } else { //if the card is wrong
-            var correct2 = Math.random() < 0.5;
-            if (correct2) { //if the period is wrong
+            if (correct2 = Math.random() < 0.5) { //if the period is wrong
                 var hour = Math.floor(Math.random() * 6) + 1;
                 while (hour == p) {
                     hour = Math.floor(Math.random() * 6) + 1;
                 }
                 if (Math.random() < 0.5) {
                     if (Math.random() < 0.5) {
-                        var img2 = document.createElement("img");
-                        img2.id = "logo";
-                        img2.src = "./higleyKnight.png";
-                        var src2 = document.getElementById("logoSpot");
-                        src2.innerHTML = ""
-                        src2.appendChild(img2);
+                        var img = document.createElement("img");
+                        img.id = "logo";
+                        img.src = "./higleyKnight.png";
+                        var src = document.getElementById("logoSpot");
+                        src.innerHTML = ""
+                        src.appendChild(img);
                     } else {
-                        var img2 = document.createElement("img");
-                        img2.id = "logo";
-                        img2.src = "./wrongLogo.png";
-                        var src2 = document.getElementById("logoSpot");
-                        src2.innerHTML = ""
-                        src2.appendChild(img2);
+                        var img = document.createElement("img");
+                        img.id = "logo";
+                        img.src = "./wrongLogo.png";
+                        var src = document.getElementById("logoSpot");
+                        src.innerHTML = ""
+                        src.appendChild(img);
 
                     }
+                    if (correct2 = Math.random() < 0.5) { //if the period is wrong
+                        var hour = Math.floor(Math.random() * 6) + 1;
+                        while (hour == p) {
+                            hour = Math.floor(Math.random() * 6) + 1;
+                        }
+                    }
+
                 }
             } else { //if the image is wrong
-                //randomize image here
+                if (Math.random() < 0.5) {
+                    var img = document.createElement("img");
+                    img.id = "logo";
+                    img.src = "./higleyKnight.png";
+                    var src = document.getElementById("logoSpot");
+                    src.innerHTML = ""
+                    src.appendChild(img);
+                } else {
+                    var img = document.createElement("img");
+                    img.id = "logo";
+                    img.src = "./wrongLogo.png";
+                    var src = document.getElementById("logoSpot");
+                    src.innerHTML = ""
+                    src.appendChild(img);
+                }
             }
-            document.querySelector("#release").innerHTML = hour;
         }
 
         //set current student
@@ -235,15 +254,22 @@
     //check if response was right or not
     function checkCard(response) {
         var studentHr = document.querySelector("#release").innerHTML;
+        console.log(document.querySelector('#logo').src)
 
         if (response) {
             if (studentHr == p) {
-                correct++;
+                if (document.querySelector('#logo').src == "file:///C:/Users/ajtro/Downloads/GameCa/higleyLogo.png") {
+                    correct++;
+                } else {
+                    incorrect++;
+                }
             } else {
                 incorrect++;
             }
         } else {
             if (studentHr != p) {
+                correct++;
+            } else if (document.querySelector('#logo').src != "file:///C:/Users/ajtro/Downloads/GameCa/higleyLogo.png") {
                 correct++;
             } else {
                 incorrect++;

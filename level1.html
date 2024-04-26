@@ -26,6 +26,7 @@
     <!-- Modal -->
     <div
       class="modal fade"
+      data-bs-backdrop="static" 
       id="nextModal"
       tabindex="-1"
       aria-labelledby="nextModalLabel"
@@ -72,10 +73,16 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
+              onclick="tryAgain()"
             >
               Try Again
             </button>
-            <button type="button" class="btn btn-primary">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="nextButton"
+              onclick="nextLevel()"
+            >
               Continue<i class="bi bi-caret-right"></i>
             </button>
           </div>
@@ -177,15 +184,19 @@
 
   function beatLevel() {
     nextLevelModal.show();
-    window.score = Math.round(correct / 18) * 100;
-    window.scoreLooop = window.setInterval(addScore, 100);
+    window.score = Math.round((correct / 18) * 100);
+    window.scoreLooop = window.setInterval(addScore, 20);
   }
 
   function addScore() {
+    if (score < 80) {
+      document.querySelector('#nextButton').disabled = true;
+    }
     let currentAmount = document.querySelector("#scoreBar").style.width;
     let newAmount = Number(currentAmount.slice(0, -1)) + 1;
-    document.querySelector("#scoreBar").style.width = newAmount + "%";
-    console.log(newAmount, score)
+    var bar = document.querySelector("#scoreBar");
+    bar.innerHTML = newAmount;
+    bar.style.width = newAmount + "%";
     if (newAmount >= score) {
       clearInterval(scoreLooop);
     }
@@ -232,7 +243,7 @@
 
   function checkLevelCompletion() {
     if (completed == 18) {
-        beatLevel();
+      beatLevel();
     }
     p = Math.floor(completed / 3) + 1;
     document.querySelector("#periodValue").innerHTML = p;
@@ -261,6 +272,10 @@
     updatePoints();
     resetCard();
   }
+  function tryAgain() {
+    location.reload();
+  }
+  function nextLevel() {}
 </script>
 
 <style>

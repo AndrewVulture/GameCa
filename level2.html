@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="./userInfo.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameCa: Level 2</title>
+</head>
+
+<body>
+    <!-- Modal -->
+    <div class="modal fade" data-bs-backdrop="static" id="nextModal" tabindex="-1" aria-labelledby="nextModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="nextModalLabel"></h1>
+                </div>
+                <div class="container text-center">
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <br />
+                            <h1>
+                                <span class="badge text-bg-secondary">Congradulations</span>
+                            </h1>
+                            <p class="modalContent">
+                                You have beaten level 2 with a score of:
+                            </p>
+                            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100">
+                                <div id="scoreBar" class="progress-bar" style="width: 1%"></div>
+                            </div>
+                            <p class="modalContent">
+                                You can you either continue or try the level again
+                            </p>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="tryAgain()">
+                        Try Again
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextButton" onclick="nextLevel()">
+                        Continue<i class="bi bi-caret-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center" id="mainCont">
+        <div class="row align-items-start">
+            <div class="col mainCol col-1"></div>
+            <div class="col mainCol">
+                <div class="card" id="idCard">
+                    <div class="card-body" id="idCardBody">
+                        <div class="container text-center" id="idCont">
+                            <div class="row align-items-start" id="idRow">
+                                <div class="col col-4" id="photoCol">
+                                    <div id="photoSpot"></div>
+                                </div>
+                                <div class="col col-8">
+                                    <p id="schoolName">HIGLEY HIGH SCHOOL</p>
+                                    <p></p>
+                                    <hr class="border border-primary border-1 opacity-75" />
+                                    <p id="year">2023-2024</p>
+                                    <p id="name"></p>
+                                    <div id="logoSpot"></div>
+                                    <p id="grade">GRADE 12</p>
+                                    <p id="releaseHr">
+                                        RELEASE HR: <span id="release">5</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container text-center btnCont">
+                    <div class="row align-items-start btnRow">
+                        <div class="col btnCol">
+                            <button type="button" class="btn btn-danger checkBtn" onclick="checkCard(false)">
+                                <i class="bi bi-x-square" id="cross"></i>
+                            </button>
+                        </div>
+                        <div class="col btnCol">
+                            <button type="button" class="btn btn-success checkBtn" onclick="checkCard(true)">
+                                <i class="bi bi-check-square" id="check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mainCol col-2">
+                <div class="card" id="timeCard">
+                    <div class="card-body" id="time">
+                        Period
+                        <span id="periodValue" class="badge text-bg-secondary">1</span>
+                    </div>
+                </div>
+                <div class="card" id="dayCard">
+                    <div class="card-body" id="day">
+                        Day <span id="dayValue" class="badge text-bg-secondary">1</span>
+                    </div>
+                </div>
+                <div class="card" id="correctCard">
+                    <div class="card-body" id="correct">
+                        Correct
+                        <span id="correctValue" class="badge text-bg-success">0</span>
+                    </div>
+                </div>
+                <div class="card" id="errorsCard">
+                    <div class="card-body" id="errors">
+                        Errors
+                        <span id="incorrectValue" class="badge text-bg-danger">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const nextLevelModal = new bootstrap.Modal(
+        document.querySelector("#nextModal"),
+        {}
+    );
+    //setting basic variables
+    window.p = 1;
+    window.d = 1;
+    window.correct = 0;
+    window.incorrect = 0;
+    window.completed = 0;
+
+    function beatLevel() {
+        nextLevelModal.show();
+        window.score = Math.round((correct / 18) * 100);
+        window.scoreLooop = window.setInterval(addScore, 20);
+    }
+
+    function addScore() {
+        if (score < 80) {
+            document.querySelector('#nextButton').disabled = true;
+        }
+        let currentAmount = document.querySelector("#scoreBar").style.width;
+        let newAmount = Number(currentAmount.slice(0, -1)) + 1;
+        var bar = document.querySelector("#scoreBar");
+        bar.innerHTML = newAmount;
+        bar.style.width = newAmount + "%";
+        if (newAmount >= score) {
+            clearInterval(scoreLooop);
+        }
+    }
+
+    //randomizes the student id
+    resetCard();
+    function resetCard() {
+        //creates 50/50 chance for the card to be incorrect or correct
+        var cardCorrect = Math.random() < 0.5;
+        if (cardCorrect) { //if the card is correct
+            document.querySelector("#release").innerHTML = p;
+        } else { //if the card is wrong
+            var correct2 = Math.random() < 0.5;
+            if (correct2) { //if the period is wrong
+                var hour = Math.floor(Math.random() * 6) + 1;
+                while (hour == p) {
+                    hour = Math.floor(Math.random() * 6) + 1;
+                }
+                
+            } else { //if the image is wrong
+                //randomize image here
+            }
+            document.querySelector("#release").innerHTML = hour;
+        }
+
+        //set current student
+        var numb = Math.floor(Math.random() * people.length);
+        var img = document.createElement("img");
+        img.id = "photo";
+        img.src = people[numb].img;
+        var src = document.getElementById("photoSpot");
+        src.innerHTML = "";
+        src.appendChild(img);
+        document.querySelector("#name").innerHTML = people[numb].name;
+    }
+
+    //set higley logo
+    var img2 = document.createElement("img");
+    img2.id = "logo";
+    img2.src = "./higleyLogo.png";
+    var src2 = document.getElementById("logoSpot");
+    src2.appendChild(img2);
+
+    function updatePoints() {
+        document.querySelector("#correctValue").innerHTML = correct;
+        document.querySelector("#incorrectValue").innerHTML = incorrect;
+    }
+
+    function checkLevelCompletion() {
+        if (completed == 18) {
+            beatLevel();
+        }
+        p = Math.floor(completed / 3) + 1;
+        document.querySelector("#periodValue").innerHTML = p;
+    }
+
+    //check if response was right or not
+    function checkCard(response) {
+        var studentHr = document.querySelector("#release").innerHTML;
+
+        if (response) {
+            if (studentHr == p) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        } else {
+            if (studentHr != p) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        }
+        completed++;
+
+        checkLevelCompletion();
+        updatePoints();
+        resetCard();
+    }
+    function tryAgain() {
+        location.reload();
+    }
+    function nextLevel() {
+        window.location.href = "level2.html"
+    }
+</script>
+
+<style>
+    body {
+        background-image: url("https://t3.ftcdn.net/jpg/02/69/63/12/360_F_269631292_jSyIhDeEv4oiXoAtcLJmNNBv2sU9U6B4.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #idCard {
+        margin-top: 5svh;
+        height: 60svh;
+    }
+
+    .mainCol {
+        height: 100svh;
+    }
+
+    .checkBtn {
+        width: 100%;
+        margin-top: 5%;
+        height: 80%;
+    }
+
+    .btnCont {
+        height: 35svh;
+    }
+
+    .btnRow {
+        height: 100%;
+    }
+
+    .btnCol {
+        height: 100%;
+    }
+
+    #cross {
+        font-size: 6rem;
+    }
+
+    #check {
+        font-size: 6rem;
+    }
+
+    #photo {
+        height: 100%;
+    }
+
+    #idCont {
+        margin-top: 2%;
+        height: 85%;
+        position: absolute;
+    }
+
+    #idRow {
+        height: 100%;
+    }
+
+    #photoCol {
+        height: 100%;
+    }
+
+    #photoSpot {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    #schoolName {
+        font-size: 2rem;
+        margin-bottom: 0rem;
+        font-weight: 700;
+        color: #263191;
+    }
+
+    #year {
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: -2px;
+        -webkit-transform: scale(1, 1.2);
+        transform: scale();
+        color: #263191;
+    }
+
+    #name {
+        margin-top: 0.5rem;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    #logoSpot {
+        display: flex;
+        height: 1px;
+    }
+
+    #logo {
+        margin-top: -5rem;
+        object-fit: contain;
+        opacity: 20%;
+        height: 15rem;
+        width: 100%;
+    }
+
+    #grade {
+        margin-top: 5rem;
+        font-size: 1.5rem;
+        font-weight: 450;
+    }
+
+    #releaseHr {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    hr {
+        margin: 0px;
+    }
+
+    p {
+        margin: 0px;
+    }
+
+    #mainCont {
+        margin: 0px;
+        max-width: 100svw;
+        width: 100svw;
+    }
+
+    #timeCard {
+        margin-top: 5svh;
+    }
+
+    #time {
+        font-weight: 600;
+    }
+
+    #errorsCard {
+        margin-top: 2svh;
+    }
+
+    #errors {
+        font-weight: 600;
+    }
+
+    #correctCard {
+        margin-top: 2svh;
+    }
+
+    #correct {
+        font-weight: 600;
+    }
+
+    #dayCard {
+        margin-top: 2svh;
+    }
+
+    #day {
+        font-weight: 600;
+    }
+
+    #idCardBody {
+        max-height: 100%;
+    }
+
+    .modalContent {
+        font-size: 2rem;
+    }
+</style>

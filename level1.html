@@ -26,7 +26,8 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      data-bs-backdrop="static" 
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       id="nextModal"
       tabindex="-1"
       aria-labelledby="nextModalLabel"
@@ -190,7 +191,7 @@
 
   function addScore() {
     if (score < 80) {
-      document.querySelector('#nextButton').disabled = true;
+      document.querySelector("#nextButton").disabled = true;
     }
     let currentAmount = document.querySelector("#scoreBar").style.width;
     let newAmount = Number(currentAmount.slice(0, -1)) + 1;

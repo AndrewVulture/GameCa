@@ -259,7 +259,7 @@
 
         if (response) {
             if (studentHr == p) {
-                if (document.querySelector('#logo').src == "file:///C:/Users/ajtro/Downloads/GameCa/higleyLogo.png") {
+                if (document.querySelector('#logo').src.slice(-14) == "higleyLogo.png") {
                     correct++;
                 } else {
                     incorrect++;
@@ -270,7 +270,7 @@
         } else {
             if (studentHr != p) {
                 correct++;
-            } else if (document.querySelector('#logo').src != "file:///C:/Users/ajtro/Downloads/GameCa/higleyLogo.png") {
+            } else if (document.querySelector('#logo').src.slice(-14) != "higleyLogo.png") {
                 correct++;
             } else {
                 incorrect++;
